@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="node_modules/phaser/dist/phaser.min.js"></script>
+</head>
+<body>
+
+    <script>
+    class Example extends Phaser.Scene
+    {
+        logo;
+        cursors;
+        preload ()
+        {
+            this.load.setBaseURL('https://labs.phaser.io');
+
+            this.load.image('sky', 'assets/skies/space3.png');
+            this.load.image('logo', 'assets/sprites/phaser-dude.png');
+            this.load.image('red', 'assets/particles/red.png');
+        }
+
+        create ()
+        {
+            this.add.image(400, 300, 'sky');
+
+            const particles = this.add.particles(0, 0, 'red', {
+                speed: 100,
+                scale: { start: 1, end: 0 },
+                blendMode: 'ADD'
+            });
+
+            this.cursors = this.input.keyboard.createCursorKeys();
+
+            this.logo = this.physics.add.image(400, 300, 'logo');
+
+            this.logo.setCollideWorldBounds(true);
+            
+            this.logo.setBounce(.5, .5);
+            
+            particles.startFollow(this.logo);
+
+        }
+
+        update ()
+    {
+
+        if (this.cursors.left.isDown)
+        {
+            this.logo.setVelocityX(-300);
+        }
+        else if (this.cursors.right.isDown)
+        {
+            this.logo.setVelocityX(300);
+        }
+
+        if (this.cursors.up.isDown)
+        {
+            this.logo.setVelocityY(-300);
+        }
+        else if (this.cursors.down.isDown)
+        {
+            this.logo.setVelocityY(300);
+        }
+    }
+
+    }
+
+    const config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+        scene: Example,
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 200 }
+            }
+        }
+    };
+
+    const game = new Phaser.Game(config);
+    </script>
+
+</body>
+</html>
