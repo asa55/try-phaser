@@ -1,0 +1,12 @@
+{
+    "name": "Try Phaser in Codespaces",
+    "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:18",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "GitHub.copilot"
+            ]
+        }
+    },
+    "postCreateCommand": "cd /workspaces/try-phaser && npm install http-server && npm install"
+}
